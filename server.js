@@ -7,6 +7,7 @@ const pharmacyRoutes = require('./api/pharmacyRoutes');
 const adminRoutes = require('./api/adminRoutes');
 const cashierRoutes = require('./api/cashierRoutes');
 const doctorRoutes = require('./api/doctorRoutes');
+//import DoctorModel from './schema/Doctor';
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use('/api', pharmacyRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', cashierRoutes);
 app.use('/api', doctorRoutes);
+const doctors = require('./schema/Doctor');
 
 const connect = require('./database/conn.js');
 
@@ -31,6 +33,17 @@ connect()
 		try {
 			app.listen(PORT, () => {
 				console.log(`Server connected to http://localhost:${PORT}`);
+				// const data = new doctors({
+				// 	name: 'String',
+				// 	nic: 'String',
+				// 	email: 'String',
+				// 	address: 'String',
+				// 	regno: 'String',
+				// 	speciality: 'String',
+				// });
+				// data.save().then((result) => {
+				// 	console.log(result);
+				// });
 			});
 		} catch (error) {
 			console.log('Cannot connect to the server');

@@ -15,7 +15,7 @@ router.post('/getmyappoinments', async (req, res) => {
 			res.send(result);
 		}
 	});
-	console.log(id);
+	//console.log(id);
 });
 router.post('/setprescription', async (req, res) => {
 	const id = req.body.id;

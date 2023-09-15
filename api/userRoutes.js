@@ -8,9 +8,16 @@ const users = require('../schema/User');
 router.post('/signinuser', async (req, res) => {
 	const password = req.body.password;
 	const email = req.body.email;
+
 	users.findOne({email: email}).then((result) => {
+		console.log(result);
 		if (result) {
 			if (result.password == password) {
+				if (result.role == 'Doctor') {
+					doctors.findOne({email: email}).then((result_2) => {
+						res.send({type: result.role, id: result_2._id});
+					});
+				}
 				res.send({type: result.role});
 			} else {
 				res.send('Password not matched');

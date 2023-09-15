@@ -55,7 +55,7 @@ router.post('/addstaff', async (req, res) => {
 	const user = new users({
 		email: email,
 		password: otp,
-		role: 'role',
+		role: role,
 	});
 	doctor.save().then((result) => {
 		user.save().then((result) => {

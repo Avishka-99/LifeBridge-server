@@ -21,6 +21,7 @@ router.post('/addappoinment', async (req, res) => {
 			date: date,
 			doctor: doctor,
 			dname: result.name,
+			presription: '',
 		});
 		appoinments.save().then((result) => {
 			appoinment.find().then((result) => {

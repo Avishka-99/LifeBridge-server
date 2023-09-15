@@ -5,56 +5,50 @@ const app = express();
 const mongoose = require('mongoose');
 const doctors = require('../schema/Doctor');
 const users = require('../schema/User');
+const appoinment = require('../schema/Appoinment');
 const staffmember = require('../schema/Staff');
-router.post('/adddoctor', async (req, res) => {
+router.post('/addappoinment', async (req, res) => {
 	const name = req.body.name;
-	const nic = req.body.nic;
-	const address = req.body.address;
-	const regno = req.body.regno;
-	const email = req.body.email;
-	const speciality = req.body.speciality;
-	const doctor = new doctors({
-		name: name,
-		nic: nic,
-		email: email,
-		address: address,
-		regno: regno,
-		speciality: speciality,
+	const age = req.body.age;
+	const date = req.body.date;
+	const doctor = req.body.doctor;
+	doctors.findById(doctor).then((result) => {
+		console.log(result);
+		const doctor_name = result.name;
+		const appoinments = new appoinment({
+			name: name,
+			age: age,
+			date: date,
+			doctor: doctor,
+			dname: result.name,
+		});
+		appoinments.save().then((result) => {
+			appoinment.find().then((result) => {
+				res.send(result);
+			});
+			//res.send('success');
+		});
 	});
-	const otp = generateOtp(6);
-	const user = new users({
-		email: email,
-		password: otp,
-	});
-	doctor.save().then((result) => {
-		user.save().then((result) => sendMail(otp, email), res.send('success'));
-	});
+
+	// const appoinments = new appoinment({
+	// 	name: name,
+	// 	age: age,
+	// 	date: date,
+	// 	doctor: doctor,
+	// });
+	//res.send('success');
+	// appoinments.save().then((result) => {
+	// 	res.send('success');
+	// });
 });
 router.post('/getdoctors', async (req, res) => {
 	doctors.find().then((result) => {
 		res.send(result);
 	});
-	// const name = req.body.name;
-	// const nic = req.body.nic;
-	// const address = req.body.address;
-	// const regno = req.body.regno;
-	// const email = req.body.email;
-	// const speciality = req.body.speciality;
-	// const doctor = new doctors({
-	// 	name: name,
-	// 	nic: nic,
-	// 	email: email,
-	// 	address: address,
-	// 	regno: regno,
-	// 	speciality: speciality,
-	// });
-	// const otp = generateOtp(6);
-	// const user = new users({
-	// 	email: email,
-	// 	password: otp,
-	// });
-	// doctor.save().then((result) => {
-	// 	user.save().then((result) => sendMail(otp, email), res.send('success'));
-	// });
+});
+router.post('/getallappoinments', async (req, res) => {
+	appoinment.find().then((result) => {
+		res.send(result);
+	});
 });
 module.exports = router;

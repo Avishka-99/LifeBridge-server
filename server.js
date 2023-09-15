@@ -7,6 +7,7 @@ const pharmacyRoutes = require('./api/pharmacyRoutes');
 const adminRoutes = require('./api/adminRoutes');
 const cashierRoutes = require('./api/cashierRoutes');
 const doctorRoutes = require('./api/doctorRoutes');
+const userRoutes = require('./api/userRoutes');
 //import DoctorModel from './schema/Doctor';
 const dotenv = require('dotenv');
 dotenv.config();
@@ -18,6 +19,7 @@ app.use('/api', pharmacyRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', cashierRoutes);
 app.use('/api', doctorRoutes);
+app.use('/api', userRoutes);
 const doctors = require('./schema/Doctor');
 
 const connect = require('./database/conn.js');

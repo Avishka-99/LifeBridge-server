@@ -27,9 +27,15 @@ router.post('/adddoctor', async (req, res) => {
 	const user = new users({
 		email: email,
 		password: otp,
+		role: 'Doctor',
 	});
 	doctor.save().then((result) => {
-		user.save().then((result) => sendMail(otp, email), res.send('success'));
+		user.save().then((result) => {
+			sendMail(otp, email),
+				doctors.find().then((result_1) => {
+					res.send(result_1);
+				});
+		});
 	});
 });
 router.post('/addstaff', async (req, res) => {
@@ -49,16 +55,21 @@ router.post('/addstaff', async (req, res) => {
 	const user = new users({
 		email: email,
 		password: otp,
+		role: 'role',
 	});
 	doctor.save().then((result) => {
-		user.save().then((result) => sendMail(otp, email), res.send('success'));
+		user.save().then((result) => {
+			sendMail(otp, email),
+				staffmember.find().then((result_1) => {
+					res.send(result_1);
+				});
+		});
 	});
 });
-//const connection = require('../database/conn');
+router.post('/getstaff', async (req, res) => {
+	staffmember.find().then((result) => {
+		res.send(result);
+	});
+});
 
-// mongoose.connect('mongodb://localhost:27017/usersdb', {
-// 	useNewUrlParser: true,
-// 	useFindAndModify: false,
-// 	useUnifiedTopology: true,
-// });
 module.exports = router;
